@@ -10,6 +10,7 @@ Todo:
 */
 
 function Engine(canvas, modelConstructor, stateConstructor, config) {
+	Engine.I = this;
 
 	// Setup canvas
 	this.canvas = canvas;
@@ -62,9 +63,7 @@ function Engine(canvas, modelConstructor, stateConstructor, config) {
 	window.addEventListener("click", function(e) {
 		engine.click(e);
 	}, false);
-}
 
-Engine.prototype.init = function() {
 	var engine = this;
 	function loop() {
 		window.requestAnimationFrame(loop);
@@ -73,7 +72,7 @@ Engine.prototype.init = function() {
 		engine.keys.charQueue = [];
 	};
 	loop();
-};
+}
 
 Engine.prototype.newRandomPosition = function() {
 	return new V(Math.random() * this.canvas.width, Math.random() * this.canvas.height);

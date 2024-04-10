@@ -1,9 +1,7 @@
 
-function GameOver(engine) {
-	this.engine = engine;
-	var ctx = engine.ctx;
-	var canvas = this.engine.canvas;
+function GameOver() {
 
+	var ctx = Model.I.ctx;
 	ctx.save();
 	ctx.globalAlpha = 0.5;
 	ctx.textAlign = "center";

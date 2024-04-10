@@ -2,11 +2,16 @@
 function Player(pos) {
 	this.pos = pos;
 	this.vel = new V();
-	this.rot = 0;
+	this.speed = 0;
+
+	this.rot = -Math.PI/2;
 	this.rotVel = 0;
-	this.rad = 20;
-	this.box = new V(this.rad, this.rad);
+
+	this.boxOffset = new V(0, -20);
+	this.boxSize = new V(60, 40);
 	this.dead = false;
+
+	Player.I = this;
 }
 
 Player.prototype.draw = function(ctx) {
@@ -15,6 +20,6 @@ Player.prototype.draw = function(ctx) {
 	ctx.rotate(this.rot);
 	ctx.strokeStyle = "orange";
 	ctx.lineWidth = 5;
-	ctx.strokeRect(-this.box.x, -this.box.y, this.box.x*2, this.box.y*2);
+	ctx.strokeRect(this.boxOffset.x, this.boxOffset.y, this.boxSize.x, this.boxSize.y);
 	ctx.restore();
 }

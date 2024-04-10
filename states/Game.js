@@ -1,59 +1,50 @@
 
-function Game(engine) {
-	this.engine = engine;
+function Game() {
+	this.carSpawnTimer = 0;
 
-	this.rockTimer = 0;
-
-	this.countDownTimer = engine.config.countdowntimer;
+	this.countDownTimer = config.countdowntimer;
 	this.countDown = 3;
-	this.countDownScale = engine.config.countdownstartscale;
+	this.countDownScale = config.countdownstartscale;
 }
 
 Game.prototype.update = function() {
-	var model = this.engine.model;
-	var player = model.player;
-	var config = this.engine.config;
-	var canvas = this.engine.canvas;
-	var ctx = this.engine.ctx;
+	var canvas = Model.I.canvas;
+	var ctx = Model.I.ctx;
 
-	// Spawn more rocks on a timer
+	// Spawn more cars on a timer
 	if(this.countDown < 1) {
-		this.rockTimer += config.basespawnrate * canvas.width;
-		while(this.rockTimer >= 1) {
-			this.rockTimer--;
-			if(Math.random() < config.dartchance) {
-				model.things.push(new Dart(new V(Math.random() * canvas.width, -20)));
-			} else if(Math.random() < config.wallchance) {
-				model.things.push(new Wall(new V(Math.random() * canvas.width, -20), config.wallwidth));
-			} else {
-				model.things.push(new Rock(new V(Math.random() * canvas.width, -20)));
-			}
+		this.carSpawnTimer += config.basespawnrate * canvas.width;
+		while(this.carSpawnTimer >= 1) {
+			this.carSpawnTimer--;
+			if(Model.I.cars.length > config.maxnumberofcars) continue;
+			new Car(V.add(Player.I.pos, V.trig(Math.random() * Math.PI*2, config.carspawndistance)));
 		}
 	}
 
-	// Update the things
-	for(var i = 0; i < model.things.length; i++) {
-		if(model.things[i].update(model)) {
-			model.things.splice(i, 1);
+	// Update cars
+	for(var i = 0; i < Model.I.cars.length; i++) {
+		if(Model.I.cars[i].update(Model.I)) {
+			Model.I.cars.splice(i, 1);
 			i--;
 		}
 	}
 
 	// Move the Player
 	if(config.mousecontrols) {
-		player.pos = new V(this.engine.mouse.pos);
+		Player.I.pos = new V(Engine.I.mouse.pos);
 	} else {
-		player.vel = player.vel.scale(config.playerfriction);
-		steering = this.engine.doSteeringControls(config.playeraccel, config.playerrotationaccel, [38,37,40,39]);
-		player.rotVel *= config.playerrotationfriction;
-		player.rotVel += steering.rotate;
-		player.rot += player.rotVel;
-		player.vel.accum(V.trig(steering.move, player.rot));
-		player.pos.accum(player.vel);
+		Player.I.vel = Player.I.vel.scale(config.playerfriction);
+		steering = Engine.I.doSteeringControls(config.playeraccel, config.playerrotationaccel, [38,37,40,39]);
+		Player.I.rotVel *= config.playerrotationfriction;
+		Player.I.rotVel += steering.rotate;
+		Player.I.rot += Player.I.rotVel;
+		Player.I.speed += steering.move;
+		Player.I.vel.accum(V.trig(Player.I.rot, Player.I.speed));
+		Player.I.pos.accum(Player.I.vel);
 	}
 
 	// Draw
-	this.engine.model.draw("all");
+	Model.I.draw("all");
 
 	// Draw countdown at the beginning of the game
 	if(this.countDown > 0) {
@@ -81,7 +72,7 @@ Game.prototype.update = function() {
 	}
 
 	// If the player is dead, switch to Game Over
-	if(player.dead) {
-		this.engine.state = new GameOver(this.engine);
+	if(Player.I.dead) {
+		Engine.I.state = new GameOver();
 	}
 };

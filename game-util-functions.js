@@ -108,3 +108,57 @@ function bindObjectToCanvas(object, canvas) {
 	if(object.pos.y < object.box.y) object.pos.y = object.box.y;
 	if(object.pos.y > canvas.height - object.box.y) object.pos.y = canvas.height - object.box.y;
 }
+
+// More Math
+
+function generateRotationTransform(rotation) {
+	var xVector = V.trig(rotation, 1);
+	var yVector = V.trig(rotation + Math.PI/2, 1);
+	return {
+		X: xVector,
+		Y: yVector
+	};
+}
+
+function applyRotationTransform(vector, transform) {
+	var xPart = transform.X.scale(vector.x);
+	var yPart = transform.Y.scale(vector.y);
+	return V.add(xPart, yPart);
+}
+
+function getRotatableBoxCorners(box) {
+	var corners = [];
+	corners.push(new V(box.boxOffset));
+	corners.push(new V(box.boxOffset.x + box.boxSize.x, box.boxOffset.y));
+	corners.push(V.add(box.boxOffset, box.boxSize));
+	corners.push(new V(box.boxOffset.x, box.boxOffset.y + box.boxSize.y));
+	var rotationTransform = generateRotationTransform(box.rot);
+	for(var i = 0; i < corners.length; i++) {
+		corners[i] = applyRotationTransform(corners[i], rotationTransform);
+		corners[i].accum(box.pos);
+	}
+	return corners;
+}
+
+function isPointInsideShape(point, shapeCorners) {
+	for(var i = 0; i < shapeCorners.length; i++) {
+		var corner1 = shapeCorners[i];
+		var corner2 = shapeCorners[(i+1)%shapeCorners.length];
+		var edge = corner2.subtract(corner1);
+		var offsetOfPoint = point.subtract(corner1);
+		if(edge.cross(offsetOfPoint) < 0) return false;
+	}
+	return true;
+}
+
+function doRotatableBoxesIntersect(boxA, boxB) {
+	var cornersOfBoxA = getRotatableBoxCorners(boxA);
+	var cornersOfBoxB = getRotatableBoxCorners(boxB);
+	// Check if any of A's corners are in B
+	for(var i = 0; i < cornersOfBoxA.length; i++)
+		if(isPointInsideShape(cornersOfBoxA[i], cornersOfBoxB)) return true;
+	// Check if any of B's corners are in A
+	for(var i = 0; i < cornersOfBoxB.length; i++)
+		if(isPointInsideShape(cornersOfBoxB[i], cornersOfBoxA)) return true;
+	return false;
+}

@@ -1,21 +1,20 @@
 
 var config = {
 	fullscreen: true,
+	camerarotationtenacity: 0.07,
 	countdowntimer: 60,
 	countdownstartscale: 5,
 	mousecontrols: false,
-	playeraccel: 0.8,
+	playeraccel: 0.03,
 	playerfriction: 0.8,
-	playerrotationaccel: 0.002,
-	playerrotationfriction: 0.9,
+	playerrotationaccel: 0.001,
+	playerrotationfriction: 0.98,
+	maxnumberofcars: 350,
 	basespawnrate: 0.00026,
-	wallwidth: 200,
-	dartchance: 0.2,
-	wallchance: 0.02,
-	baserockspeed: 5,
-	basedartspeed: 8,
-	basewallspeed: 2
+	carremovaldistance: 1600,
+	carspawndistance: 1300,
+	carspeedvariation: 2,
+	basecarspeed: 9
 };
 
 var engine = new Engine($("canvas")[0], Model, Game, config);
-engine.init();

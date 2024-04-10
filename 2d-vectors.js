@@ -38,7 +38,7 @@ V.prototype.accum = function() {
 	}
 };
 
-V.prototype.add = function() {
+V.add = function() {
 	var newV = new V();
 	for(var i = 0; i < arguments.length; i++) {
 		newV.x += arguments[i].x;
@@ -82,6 +82,10 @@ V.prototype.dist = function(vector) {
 V.prototype.dot = function(vector) {
 	return this.x * vector.x + this.y * vector.y;
 };
+
+V.prototype.cross = function(vector) {
+	return this.x * vector.y - this.y * vector.x;
+}
 
 V.prototype.projectOnNormal = function(normal) {
 	return normal.scale(this.dot(normal));
