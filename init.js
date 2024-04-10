@@ -25,7 +25,11 @@ var config = {
 	carremovaldistance: 1600,
 	carspawndistance: 1300,
 	carspeedvariation: 2,
-	basecarspeed: 9
+	basecarspeed: 9,
+	gameovertexttimer: 100,
+	gameoverprogressrate: 0.02,
+	crashdustvelocity: 10,
+	crashdustamount: 30
 };
 
 var engine = new Engine($("canvas")[0], Model, Game, config);

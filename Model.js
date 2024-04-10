@@ -9,6 +9,8 @@ function Model(canvas, context, config) {
 	this.dust = [];
 
 	this.cameraRot = Player.I.rot;
+	this.cameraPos = new V(Player.I.pos);
+	this.followPlayer = true;
 
 	Model.I = this;
 }
@@ -22,12 +24,15 @@ Model.prototype.drawAll = function() {
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 	// Move the camera
-	var rotationNeeded = Player.I.rot - this.cameraRot;
-	this.cameraRot += rotationNeeded * config.camerarotationtenacity;
+	if(this.followPlayer) {
+		var rotationNeeded = Player.I.rot - this.cameraRot;
+		this.cameraRot += rotationNeeded * config.camerarotationtenacity;
+		this.cameraPos = new V(Player.I.pos);
+	}
 	ctx.save();
 	ctx.translate(canvas.width/2, canvas.height/4*3);
 	ctx.rotate(-this.cameraRot - Math.PI/2);
-	ctx.translate(-Player.I.pos.x, -Player.I.pos.y);
+	ctx.translate(-this.cameraPos.x, -this.cameraPos.y);
 
 	// Draw grid around player
 	ctx.save();
