@@ -6,8 +6,12 @@ function Car(pos) {
 	this.speed = config.basecarspeed + (Math.random() * 2 - 1) * config.carspeedvariation;
 	this.vel = V.trig(this.rot, this.speed);
 
-	this.boxOffset = new V(0, -20);
-	this.boxSize = new V(60, 40);
+	var width = config.carminwidth;
+	var length = config.carminlength;
+	width += config.carwidthvariation * Math.random();
+	length += config.carlengthvariation * Math.random();
+	this.boxOffset = new V(0, width/2);
+	this.boxSize = new V(length, width);
 
 	Model.I.cars.push(this);
 }
