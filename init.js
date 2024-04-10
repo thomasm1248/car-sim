@@ -28,6 +28,7 @@ var config = {
 	basecarspeed: 9,
 	gameovertexttimer: 100,
 	gameoverprogressrate: 0.02,
+	playercrashfriction: 0.98,
 	crashdustvelocity: 10,
 	crashdustamount: 30
 };

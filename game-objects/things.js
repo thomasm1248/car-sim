@@ -40,6 +40,7 @@ Car.prototype.update = function() {
 	// Check if the car collides with the player
 	if(doRotatableBoxesIntersect(this, Player.I)) {
 		Player.I.dead = true;
+		Player.I.vel = this.pos.subtract(Player.I.pos).scale(-0.1);
 	}
 
 	// Remove the car when it's too far from the player
