@@ -6,7 +6,7 @@ function Model(canvas, context, config) {
 
 	new Player(new V(this.canvas.width/2, this.canvas.height/4*3));
 	this.cars = [];
-	this.gravel = [];
+	this.dust = [];
 
 	this.cameraRot = Player.I.rot;
 
@@ -48,9 +48,9 @@ Model.prototype.drawAll = function() {
 	ctx.stroke();
 	ctx.restore();
 
-	// Draw the gravel
-	for(var i = 0; i < this.gravel.length; i++) {
-		this.gravel[i].draw(ctx);
+	// Draw the dust
+	for(var i = 0; i < this.dust.length; i++) {
+		this.dust[i].draw(ctx);
 	}
 
 	// Draw all the cars

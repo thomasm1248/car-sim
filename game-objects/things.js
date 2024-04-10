@@ -25,10 +25,10 @@ Car.prototype.draw = function(ctx) {
 };
 
 Car.prototype.update = function() {
-	// Spawn gravel under the car
+	// Spawn dust under the car
 	var carCorners = getRotatableBoxCorners(this);
-	if(Math.random() < config.gravelspawnchance) new Gravel(carCorners[0], this.vel);
-	if(Math.random() < config.gravelspawnchance) new Gravel(carCorners[3], this.vel);
+	if(Math.random() < config.dustspawnchance) new Dust(carCorners[0], this.vel);
+	if(Math.random() < config.dustspawnchance) new Dust(carCorners[3], this.vel);
 
 	// Move the car in the direction it's facing
 	this.pos.accum(V.trig(this.rot, this.speed));
@@ -44,27 +44,28 @@ Car.prototype.update = function() {
 };
 
 
-function Gravel(pos, vel) {
+function Dust(pos, vel) {
 	this.pos = new V(pos);
-	this.vel = new V.trig(Math.random() * Math.PI * 2, config.gravelvelcoef * vel.norm());
+	this.vel = new V.trig(Math.random() * Math.PI * 2, config.dustvelcoef * vel.norm());
 	this.rot = Math.random() * Math.PI;
-	this.size = Math.random() * config.gravelmaxsize;
+	this.size = Math.random() * config.dustmaxsize;
 	
-	Model.I.gravel.push(this);
+	Model.I.dust.push(this);
 }
 
-Gravel.prototype.draw = function(ctx) {
+Dust.prototype.draw = function(ctx) {
 	ctx.save();
 	translate(ctx, this.pos);
-	ctx.globalAlpha = snap(0, this.vel.norm() * config.gravelalphacoef, 1);
+	ctx.globalAlpha = snap(0, this.vel.norm() * config.dustalphacoef, 1);
 	ctx.rotate(this.rot);
 	ctx.fillStyle = "gray";
 	ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
 	ctx.restore();
 };
 
-Gravel.prototype.update = function() {
-	this.vel = this.vel.scale(config.gravelfriction);
+Dust.prototype.update = function() {
+	this.size *= config.dustgrowrate;
+	this.vel = this.vel.scale(config.dustfriction);
 	this.pos.accum(this.vel);
 	return this.vel.norm() < 0.05;
 };

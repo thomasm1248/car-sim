@@ -43,15 +43,15 @@ Game.prototype.update = function() {
 		Player.I.pos.accum(Player.I.vel);
 	}
 	
-	// Spawn gravel under the player
+	// Spawn dust under the player
 	var playerCarCorners = getRotatableBoxCorners(Player.I);
-	if(Math.random() < config.gravelspawnchance) new Gravel(playerCarCorners[0], Player.I.vel);
-	if(Math.random() < config.gravelspawnchance) new Gravel(playerCarCorners[3], Player.I.vel);
+	if(Math.random() < config.dustspawnchance) new Dust(playerCarCorners[0], Player.I.vel);
+	if(Math.random() < config.dustspawnchance) new Dust(playerCarCorners[3], Player.I.vel);
 
-	// Update gravel
-	for(var i = 0; i < Model.I.gravel.length; i++) {
-		if(Model.I.gravel[i].update(Model.I)) {
-			Model.I.gravel.splice(i, 1);
+	// Update dust
+	for(var i = 0; i < Model.I.dust.length; i++) {
+		if(Model.I.dust[i].update(Model.I)) {
+			Model.I.dust.splice(i, 1);
 			i--;
 		}
 	}
