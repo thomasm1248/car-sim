@@ -5,6 +5,9 @@ function GameOver() {
 	this.timerUntilTextDisplayed = config.gameovertexttimer;
 	this.progress = 0;
 
+	Player.I.speed = 0;
+	Player.I.rotVel *= -2;
+
 	// Stop making the camera follow the player
 	Model.I.followPlayer = false;
 
@@ -27,7 +30,7 @@ GameOver.prototype.update = function() {
 	}
 
 	// Move the Player
-	Player.I.vel = Player.I.vel.scale(config.playerfriction);
+	Player.I.vel = Player.I.vel.scale(config.playercrashfriction);
 	Player.I.rotVel *= config.playerrotationfriction;
 	Player.I.rot += Player.I.rotVel;
 	Player.I.vel.accum(V.trig(Player.I.rot, Player.I.speed));
