@@ -11,7 +11,7 @@ var config = {
 	playerrotationfriction: 0.98,
 	driftingpersistence: 0.9,
 	dustgrowrate: 1.1,
-	dustspawnchance: 0.15,
+	dustspawnchance: 0.08,
 	dustfriction: 0.9,
 	dustmaxsize: 10,
 	dustvelcoef: 0.2,
