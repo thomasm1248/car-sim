@@ -9,6 +9,7 @@ var config = {
 	playerfriction: 0.8,
 	playerrotationaccel: 0.001,
 	playerrotationfriction: 0.98,
+        driftingpersistence: 0.9,
 	gravelspawnchance: 0.15,
 	gravelfriction: 0.9,
 	gravelmaxsize: 10,

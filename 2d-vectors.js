@@ -47,6 +47,10 @@ V.add = function() {
 	return newV;
 };
 
+V.interp = function(a, b, amount) {
+    return V.add(a.scale(1 - amount), b.scale(amount));
+};
+
 V.prototype.subtract = function(vector) {
 	return new V(this.x - vector.x, this.y - vector.y);
 };
