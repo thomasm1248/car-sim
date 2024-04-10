@@ -12,13 +12,11 @@ Game.prototype.update = function() {
 	var ctx = Model.I.ctx;
 
 	// Spawn more cars on a timer
-	if(this.countDown < 1) {
-		this.carSpawnTimer += config.basespawnrate * canvas.width;
-		while(this.carSpawnTimer >= 1) {
-			this.carSpawnTimer--;
-			if(Model.I.cars.length > config.maxnumberofcars) continue;
-			new Car(V.add(Player.I.pos, V.trig(Math.random() * Math.PI*2, config.carspawndistance)));
-		}
+	this.carSpawnTimer += config.basespawnrate * canvas.width;
+	while(this.carSpawnTimer >= 1) {
+		this.carSpawnTimer--;
+		if(Model.I.cars.length > config.maxnumberofcars) continue;
+		new Car(V.add(Player.I.pos, V.trig(Math.random() * Math.PI*2, config.carspawndistance)));
 	}
 
 	// Update cars
@@ -33,7 +31,7 @@ Game.prototype.update = function() {
 	if(config.mousecontrols) {
 		Player.I.pos = new V(Engine.I.mouse.pos);
 	} else {
-                var startVel = new V(Player.I.vel);
+		var startVel = new V(Player.I.vel);
 		Player.I.vel = Player.I.vel.scale(config.playerfriction);
 		steering = Engine.I.doSteeringControls(config.playeraccel, config.playerrotationaccel, [38,37,40,39]);
 		Player.I.rotVel *= config.playerrotationfriction;
@@ -41,7 +39,7 @@ Game.prototype.update = function() {
 		Player.I.rot += Player.I.rotVel;
 		Player.I.speed += steering.move;
 		Player.I.vel.accum(V.trig(Player.I.rot, Player.I.speed));
-                if(Engine.I.keys.isDown(32)) Player.I.vel = V.interp(Player.I.vel, startVel, config.driftingpersistence);
+		if(Engine.I.keys.isDown(32)) Player.I.vel = V.interp(Player.I.vel, startVel, config.driftingpersistence);
 		Player.I.pos.accum(Player.I.vel);
 	}
 	
