@@ -42,6 +42,19 @@ Game.prototype.update = function() {
 		Player.I.vel.accum(V.trig(Player.I.rot, Player.I.speed));
 		Player.I.pos.accum(Player.I.vel);
 	}
+	
+	// Spawn gravel under the player
+	var playerCarCorners = getRotatableBoxCorners(Player.I);
+	if(Math.random() < config.gravelspawnchance) new Gravel(playerCarCorners[0], Player.I.vel);
+	if(Math.random() < config.gravelspawnchance) new Gravel(playerCarCorners[3], Player.I.vel);
+
+	// Update gravel
+	for(var i = 0; i < Model.I.gravel.length; i++) {
+		if(Model.I.gravel[i].update(Model.I)) {
+			Model.I.gravel.splice(i, 1);
+			i--;
+		}
+	}
 
 	// Draw
 	Model.I.draw("all");

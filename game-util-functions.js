@@ -5,6 +5,14 @@ This script requires the 2D Vectors script to work.
 
 */
 
+// Basic math
+
+function snap(min, x, max) {
+	if(x < min) return min;
+	if(x > max) return max;
+	return x;
+}
+
 // Arrays
 
 function filter(array, selector) {

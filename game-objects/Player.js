@@ -1,6 +1,6 @@
 
 function Player(pos) {
-	this.pos = pos;
+	this.pos = new V(pos);
 	this.vel = new V();
 	this.speed = 0;
 
