@@ -21,7 +21,7 @@ Car.prototype.draw = function(ctx) {
 	translate(ctx, this.pos);
 	ctx.rotate(this.rot);
 	ctx.beginPath();
-	ctx.strokeStyle = "red";
+	ctx.strokeStyle = "#664c15";
 	ctx.lineWidth = 3;
 	ctx.strokeRect(this.boxOffset.x, this.boxOffset.y, this.boxSize.x, this.boxSize.y);
 	ctx.stroke();
@@ -63,7 +63,7 @@ Dust.prototype.draw = function(ctx) {
 	translate(ctx, this.pos);
 	ctx.globalAlpha = snap(0, this.vel.norm() * config.dustalphacoef, 1);
 	ctx.rotate(this.rot);
-	ctx.fillStyle = "gray";
+	ctx.fillStyle = "#aa7436";
 	ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
 	ctx.restore();
 };

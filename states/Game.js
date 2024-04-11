@@ -74,7 +74,7 @@ Game.prototype.update = function() {
 		ctx.save();
 		ctx.translate(canvas.width/2, canvas.height/2);
 		ctx.scale(this.countDownScale, this.countDownScale);
-		ctx.fillStyle = "white";
+		ctx.fillStyle = "#110901";
 		ctx.textAlign = "center";
 		ctx.font = "bold 100px Serif";
 		ctx.globalAlpha = 1 - this.countDownScale / config.countdownstartscale;
@@ -91,7 +91,7 @@ Game.prototype.update = function() {
 	}
 
 	// Display the distance driven from the origin
-	ctx.fillStyle = "white";
+	ctx.fillStyle = "#352311";
 	ctx.textAlign = "left";
 	ctx.font = "bold 40px Serif";
 	ctx.fillText("Distance: " + this.distanceTraveled(), 40, canvas.height - 40);
