@@ -1,6 +1,8 @@
 
-function GameOver() {
+function GameOver(distanceTraveled) {
 	var ctx = Model.I.ctx;
+
+	this.distanceTraveled = distanceTraveled;
 
 	this.timerUntilTextDisplayed = config.gameovertexttimer;
 	this.progress = 0;
@@ -73,6 +75,12 @@ GameOver.prototype.update = function() {
 		ctx.fillText("Press Spacebar to play again", canvas.width/2, canvas.height/2 + 100);
 		ctx.restore();
 	}
+
+	// Display the distance driven from the origin
+	ctx.fillStyle = "white";
+	ctx.textAlign = "left";
+	ctx.font = "bold 40px Serif";
+	ctx.fillText("Distance: " + this.distanceTraveled, 40, canvas.height - 40);
 
 	// Restart if the player presses the spacebar
 	var keysPressed = Engine.I.keys.keyQueue;

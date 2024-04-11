@@ -1,6 +1,7 @@
 
 var config = {
 	fullscreen: true,
+	distancescale: 220,
 	camerarotationtenacity: 0.07,
 	countdowntimer: 40,
 	countdownstartscale: 5,

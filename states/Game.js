@@ -9,6 +9,10 @@ function Game() {
 	Model.I.init();
 }
 
+Game.prototype.distanceTraveled = function() {
+	return Math.floor(Player.I.pos.norm() / config.distancescale);
+};
+
 Game.prototype.update = function() {
 	var canvas = Model.I.canvas;
 	var ctx = Model.I.ctx;
@@ -86,8 +90,14 @@ Game.prototype.update = function() {
 		}
 	}
 
+	// Display the distance driven from the origin
+	ctx.fillStyle = "white";
+	ctx.textAlign = "left";
+	ctx.font = "bold 40px Serif";
+	ctx.fillText("Distance: " + this.distanceTraveled(), 40, canvas.height - 40);
+
 	// If the player is dead, switch to Game Over
 	if(Player.I.dead) {
-		Engine.I.state = new GameOver();
+		Engine.I.state = new GameOver(this.distanceTraveled());
 	}
 };

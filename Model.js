@@ -7,7 +7,7 @@ function Model(canvas, context) {
 }
 
 Model.prototype.init = function() {
-	new Player(new V(this.canvas.width/2, this.canvas.height/4*3));
+	new Player(new V());
 	this.cars = [];
 	this.dust = [];
 
