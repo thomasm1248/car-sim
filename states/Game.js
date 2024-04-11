@@ -5,6 +5,8 @@ function Game() {
 	this.countDownTimer = config.countdowntimer;
 	this.countDown = 3;
 	this.countDownScale = config.countdownstartscale;
+
+	Model.I.init();
 }
 
 Game.prototype.update = function() {

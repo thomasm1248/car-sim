@@ -2,7 +2,7 @@
 var config = {
 	fullscreen: true,
 	camerarotationtenacity: 0.07,
-	countdowntimer: 60,
+	countdowntimer: 40,
 	countdownstartscale: 5,
 	mousecontrols: false,
 	playeraccel: 0.03,
@@ -33,4 +33,4 @@ var config = {
 	crashdustamount: 30
 };
 
-var engine = new Engine($("canvas")[0], Model, Game, config);
+var engine = new Engine($("canvas")[0], Model, Game);

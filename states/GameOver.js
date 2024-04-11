@@ -69,6 +69,14 @@ GameOver.prototype.update = function() {
 		ctx.font = "bold 120px Serif";
 		ctx.fillStyle = "white";
 		ctx.fillText("Game Over", canvas.width/2, canvas.height/2);
+		ctx.font = "bold 30px Serif";
+		ctx.fillText("Press Spacebar to play again", canvas.width/2, canvas.height/2 + 100);
 		ctx.restore();
 	}
+
+	// Restart if the player presses the spacebar
+	var keysPressed = Engine.I.keys.keyQueue;
+	while(keysPressed.length)
+		if(keysPressed.pop() == 32)
+			Engine.I.state = new Game();
 };

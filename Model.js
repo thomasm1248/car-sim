@@ -1,9 +1,12 @@
 
-function Model(canvas, context, config) {
+function Model(canvas, context) {
 	this.canvas = canvas;
 	this.ctx = context;
-	this.config = config;
 
+	Model.I = this;
+}
+
+Model.prototype.init = function() {
 	new Player(new V(this.canvas.width/2, this.canvas.height/4*3));
 	this.cars = [];
 	this.dust = [];
@@ -11,9 +14,7 @@ function Model(canvas, context, config) {
 	this.cameraRot = Player.I.rot;
 	this.cameraPos = new V(Player.I.pos);
 	this.followPlayer = true;
-
-	Model.I = this;
-}
+};
 
 Model.prototype.drawAll = function() {
 	var ctx = this.ctx;
