@@ -48,7 +48,7 @@ Player.prototype.draw = function(ctx) {
 		ctx.fillRect(this.boxOffset.x + margin, this.boxOffset.y + margin, this.boxSize.x - margin*2, this.boxSize.y - margin*2);
 	}
 	// Draw box
-	ctx.strokeStyle = "orange";
+	ctx.strokeStyle = "#2867af";
 	ctx.lineWidth = 5;
 	ctx.strokeRect(this.boxOffset.x, this.boxOffset.y, this.boxSize.x, this.boxSize.y);
 	ctx.restore();

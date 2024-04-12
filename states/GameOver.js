@@ -12,6 +12,9 @@ function GameOver(distanceTraveled) {
 
 	// Stop making the camera follow the player
 	Model.I.followPlayer = false;
+	
+	// Make the player stop phasing if they are
+	Player.I.isPhasing = false;
 
 	// Spawn a bunch of dust around the player
 	for(var i = 0; i < config.crashdustamount; i++) {
