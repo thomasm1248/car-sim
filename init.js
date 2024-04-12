@@ -6,6 +6,10 @@ var config = {
 	countdowntimer: 40,
 	countdownstartscale: 5,
 	mousecontrols: false,
+	phasebutton: 85, // dvorak u
+	phaseanimationrate: 0.03,
+	phasetime: 60,
+	phasecooldown: 1000,
 	playeraccel: 0.03,
 	playerfriction: 0.8,
 	playerrotationaccel: 0.001,

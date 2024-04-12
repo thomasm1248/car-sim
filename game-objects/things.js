@@ -38,7 +38,7 @@ Car.prototype.update = function() {
 	this.pos.accum(V.trig(this.rot, this.speed));
 
 	// Check if the car collides with the player
-	if(doRotatableBoxesIntersect(this, Player.I)) {
+	if(!Player.I.isPhasing && doRotatableBoxesIntersect(this, Player.I)) {
 		Player.I.dead = true;
 		Player.I.vel = this.pos.subtract(Player.I.pos).scale(-0.1);
 	}

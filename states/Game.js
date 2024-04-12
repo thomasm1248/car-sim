@@ -5,6 +5,8 @@ function Game() {
 	this.countDownTimer = config.countdowntimer;
 	this.countDown = 3;
 	this.countDownScale = config.countdownstartscale;
+	
+	this.phasingCooldown = 0;
 
 	Model.I.init();
 }
@@ -31,6 +33,14 @@ Game.prototype.update = function() {
 			Model.I.cars.splice(i, 1);
 			i--;
 		}
+	}
+
+	// Check if user is pressing phase button
+	if(this.phasingCooldown > 0) this.phasingCooldown--;
+	if(Engine.I.keys.isDown(config.phasebutton) && this.phasingCooldown == 0) {
+		Player.I.isPhasing = true;
+		Player.I.phasingTimer = config.phasetime;
+		this.phasingCooldown = config.phasecooldown;
 	}
 
 	// Move the Player
