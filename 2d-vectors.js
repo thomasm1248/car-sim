@@ -59,6 +59,10 @@ V.prototype.scale = function(scalar) {
 	return new V(this.x * scalar, this.y * scalar);
 };
 
+V.prototype.getDir = function() {
+	return Math.atan2(this.y, this.x);
+};
+
 // Linear algebra stuff
 
 V.prototype.normSquared = function() {
