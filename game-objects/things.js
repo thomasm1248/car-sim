@@ -34,8 +34,8 @@ Car.prototype.update = function() {
 	if(Math.random() < config.dustspawnchance) new Dust(carCorners[0], this.vel);
 	if(Math.random() < config.dustspawnchance) new Dust(carCorners[3], this.vel);
 
-	// Move the car in the direction it's facing
-	this.pos.accum(V.trig(this.rot, this.speed));
+	// Move the car with its velocity
+	this.pos.accum(this.vel);
 
 	// Check if the car collides with the player
 	if(!Player.I.isPhasing && doRotatableBoxesIntersect(this, Player.I)) {
