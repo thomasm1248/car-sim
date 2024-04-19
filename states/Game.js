@@ -8,6 +8,8 @@ function Game() {
 	
 	this.phasingCooldown = 0;
 
+	this.positionResetTimer = config.positionresettimer;
+
 	Model.I.init();
 }
 
@@ -18,6 +20,26 @@ Game.prototype.distanceTraveled = function() {
 Game.prototype.update = function() {
 	var canvas = Model.I.canvas;
 	var ctx = Model.I.ctx;
+
+	// Move everything to the center of the map occasionally
+	this.positionResetTimer--;
+	if(this.positionResetTimer < 0) {
+		this.positionResetTimer = config.positionresettimer;
+		// To ensure that the grid doesn't move when we move
+		// everything, only move things by a multiple of the
+		// grid size.
+		var shift = Player.I.pos.scale(-1);
+		shift.x -= shift.x % config.gridsize;
+		shift.y -= shift.y % config.gridsize;
+		// Move the player
+		Player.I.pos.accum(shift);
+		// Move the cars
+		for(var i = 0; i < Model.I.cars.length; i++)
+			Model.I.cars[i].pos.accum(shift);
+		// Move the dust
+		for(var i = 0; i < Model.I.dust.length; i++)
+			Model.I.dust[i].pos.accum(shift);
+	}
 
 	// Spawn more cars on a timer
 	this.carSpawnTimer += config.basespawnrate * canvas.width;

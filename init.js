@@ -1,5 +1,7 @@
 
 var config = {
+	positionresettimer: 36000, // 10 min
+	gridsize: 250,
 	fullscreen: true,
 	distancescale: 220,
 	camerarotationtenacity: 0.07,

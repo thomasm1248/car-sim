@@ -39,7 +39,7 @@ Model.prototype.drawAll = function() {
 	ctx.save();
 	ctx.translate(this.cameraPos.x, this.cameraPos.y);
 	var gridSize = 1200;
-	var gridCellSize = 220;
+	var gridCellSize = config.gridsize;
 	ctx.beginPath();
 	for(var i = -gridSize - (this.cameraPos.y % gridCellSize); i <= gridSize; i += gridCellSize) { // horizontal
 		ctx.moveTo(-gridSize, i);
