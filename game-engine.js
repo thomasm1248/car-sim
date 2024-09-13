@@ -9,7 +9,7 @@ Todo:
 
 */
 
-function Engine(canvas, modelConstructor, stateConstructor, config) {
+function Engine(canvas, modelConstructor, stateConstructor) {
 	Engine.I = this;
 
 	// Setup canvas
@@ -25,8 +25,8 @@ function Engine(canvas, modelConstructor, stateConstructor, config) {
 
 	// Setup environment objects
 	this.config = config;
-	this.model = new modelConstructor(this.canvas, this.ctx, config);
-	this.state = new stateConstructor(this);
+	this.model = new modelConstructor(this.canvas, this.ctx);
+	this.state = new stateConstructor();
 	this.keys = {
 		keyQueue: [],
 		charQueue: [],

@@ -1,10 +1,17 @@
 
 var config = {
+	positionresettimer: 36000, // 10 min
+	gridsize: 250,
 	fullscreen: true,
+	distancescale: 220,
 	camerarotationtenacity: 0.07,
-	countdowntimer: 60,
+	countdowntimer: 40,
 	countdownstartscale: 5,
 	mousecontrols: false,
+	phasebutton: 85, // dvorak u
+	phaseanimationrate: 0.03,
+	phasetime: 60,
+	phasecooldown: 1000,
 	playeraccel: 0.03,
 	playerfriction: 0.8,
 	playerrotationaccel: 0.001,
@@ -33,4 +40,4 @@ var config = {
 	crashdustamount: 30
 };
 
-var engine = new Engine($("canvas")[0], Model, Game, config);
+var engine = new Engine($("canvas")[0], Model, Game);

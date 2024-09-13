@@ -88,6 +88,14 @@ function forEachIntersectingBox(object, array, action) {
 	}
 }
 
+function forEachPair(arr, func) {
+	for(var i = 1; i < arr.length; i++) {
+		for(var j = 0; j < i; j++) {
+			func(arr[i], arr[j]);
+		}
+	}
+}
+
 // Canvas
 
 var ctx;

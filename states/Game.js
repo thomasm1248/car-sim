@@ -5,11 +5,41 @@ function Game() {
 	this.countDownTimer = config.countdowntimer;
 	this.countDown = 3;
 	this.countDownScale = config.countdownstartscale;
+	
+	this.phasingCooldown = 0;
+
+	this.positionResetTimer = config.positionresettimer;
+
+	Model.I.init();
 }
+
+Game.prototype.distanceTraveled = function() {
+	return Math.floor(Player.I.pos.norm() / config.distancescale);
+};
 
 Game.prototype.update = function() {
 	var canvas = Model.I.canvas;
 	var ctx = Model.I.ctx;
+
+	// Move everything to the center of the map occasionally
+	this.positionResetTimer--;
+	if(this.positionResetTimer < 0) {
+		this.positionResetTimer = config.positionresettimer;
+		// To ensure that the grid doesn't move when we move
+		// everything, only move things by a multiple of the
+		// grid size.
+		var shift = Player.I.pos.scale(-1);
+		shift.x -= shift.x % config.gridsize;
+		shift.y -= shift.y % config.gridsize;
+		// Move the player
+		Player.I.pos.accum(shift);
+		// Move the cars
+		for(var i = 0; i < Model.I.cars.length; i++)
+			Model.I.cars[i].pos.accum(shift);
+		// Move the dust
+		for(var i = 0; i < Model.I.dust.length; i++)
+			Model.I.dust[i].pos.accum(shift);
+	}
 
 	// Spawn more cars on a timer
 	this.carSpawnTimer += config.basespawnrate * canvas.width;
@@ -25,6 +55,14 @@ Game.prototype.update = function() {
 			Model.I.cars.splice(i, 1);
 			i--;
 		}
+	}
+
+	// Check if user is pressing phase button
+	if(this.phasingCooldown > 0) this.phasingCooldown--;
+	if(Engine.I.keys.isDown(config.phasebutton) && this.phasingCooldown == 0) {
+		Player.I.isPhasing = true;
+		Player.I.phasingTimer = config.phasetime;
+		this.phasingCooldown = config.phasecooldown;
 	}
 
 	// Move the Player
@@ -68,7 +106,7 @@ Game.prototype.update = function() {
 		ctx.save();
 		ctx.translate(canvas.width/2, canvas.height/2);
 		ctx.scale(this.countDownScale, this.countDownScale);
-		ctx.fillStyle = "white";
+		ctx.fillStyle = "#110901";
 		ctx.textAlign = "center";
 		ctx.font = "bold 100px Serif";
 		ctx.globalAlpha = 1 - this.countDownScale / config.countdownstartscale;
@@ -84,8 +122,14 @@ Game.prototype.update = function() {
 		}
 	}
 
+	// Display the distance driven from the origin
+	ctx.fillStyle = "#352311";
+	ctx.textAlign = "left";
+	ctx.font = "bold 40px Serif";
+	ctx.fillText("Distance: " + this.distanceTraveled(), 40, canvas.height - 40);
+
 	// If the player is dead, switch to Game Over
 	if(Player.I.dead) {
-		Engine.I.state = new GameOver();
+		Engine.I.state = new GameOver(this.distanceTraveled());
 	}
 };

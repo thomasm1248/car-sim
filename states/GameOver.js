@@ -1,6 +1,8 @@
 
-function GameOver() {
+function GameOver(distanceTraveled) {
 	var ctx = Model.I.ctx;
+
+	this.distanceTraveled = distanceTraveled;
 
 	this.timerUntilTextDisplayed = config.gameovertexttimer;
 	this.progress = 0;
@@ -10,6 +12,9 @@ function GameOver() {
 
 	// Stop making the camera follow the player
 	Model.I.followPlayer = false;
+	
+	// Make the player stop phasing if they are
+	Player.I.isPhasing = false;
 
 	// Spawn a bunch of dust around the player
 	for(var i = 0; i < config.crashdustamount; i++) {
@@ -57,8 +62,8 @@ GameOver.prototype.update = function() {
 	if(this.timerUntilTextDisplayed < 0) {
 		this.progress = snap(0, this.progress + config.gameoverprogressrate, 1);
 		ctx.save();
-		ctx.fillStyle = "black";
-		ctx.globalAlpha = this.progress;
+		ctx.fillStyle = "#f4d99f";
+		ctx.globalAlpha = snap(0, this.progress, 0.6);
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
 		ctx.globalAlpha = 1;
 		ctx.beginPath();
@@ -67,8 +72,22 @@ GameOver.prototype.update = function() {
 		ctx.globalAlpha = 0.5;
 		ctx.textAlign = "center";
 		ctx.font = "bold 120px Serif";
-		ctx.fillStyle = "white";
+		ctx.fillStyle = "#110901";
 		ctx.fillText("Game Over", canvas.width/2, canvas.height/2);
+		ctx.font = "bold 30px Serif";
+		ctx.fillText("Press Spacebar to play again", canvas.width/2, canvas.height/2 + 100);
 		ctx.restore();
 	}
+
+	// Display the distance driven from the origin
+	ctx.fillStyle = "#352311";
+	ctx.textAlign = "left";
+	ctx.font = "bold 40px Serif";
+	ctx.fillText("Distance: " + this.distanceTraveled, 40, canvas.height - 40);
+
+	// Restart if the player presses the spacebar
+	var keysPressed = Engine.I.keys.keyQueue;
+	while(keysPressed.length)
+		if(keysPressed.pop() == 32)
+			Engine.I.state = new Game();
 };

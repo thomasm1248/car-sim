@@ -1,26 +1,27 @@
 
-function Model(canvas, context, config) {
+function Model(canvas, context) {
 	this.canvas = canvas;
 	this.ctx = context;
-	this.config = config;
 
-	new Player(new V(this.canvas.width/2, this.canvas.height/4*3));
+	Model.I = this;
+}
+
+Model.prototype.init = function() {
+	new Player(new V());
 	this.cars = [];
 	this.dust = [];
 
 	this.cameraRot = Player.I.rot;
 	this.cameraPos = new V(Player.I.pos);
 	this.followPlayer = true;
-
-	Model.I = this;
-}
+};
 
 Model.prototype.drawAll = function() {
 	var ctx = this.ctx;
 	var canvas = this.canvas;
 
 	// Draw a background
-	ctx.fillStyle = "black";
+	ctx.fillStyle = "#f9db93";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 	// Move the camera
@@ -34,22 +35,22 @@ Model.prototype.drawAll = function() {
 	ctx.rotate(-this.cameraRot - Math.PI/2);
 	ctx.translate(-this.cameraPos.x, -this.cameraPos.y);
 
-	// Draw grid around player
+	// Draw grid around camera
 	ctx.save();
-	ctx.translate(Player.I.pos.x, Player.I.pos.y);
+	ctx.translate(this.cameraPos.x, this.cameraPos.y);
 	var gridSize = 1200;
-	var gridCellSize = 220;
+	var gridCellSize = config.gridsize;
 	ctx.beginPath();
-	for(var i = -gridSize - (Player.I.pos.y % gridCellSize); i <= gridSize; i += gridCellSize) { // horizontal
+	for(var i = -gridSize - (this.cameraPos.y % gridCellSize); i <= gridSize; i += gridCellSize) { // horizontal
 		ctx.moveTo(-gridSize, i);
 		ctx.lineTo(gridSize, i);
 	}
-	for(var i = -gridSize - (Player.I.pos.x % gridCellSize); i <= gridSize; i += gridCellSize) { // vertical
+	for(var i = -gridSize - (this.cameraPos.x % gridCellSize); i <= gridSize; i += gridCellSize) { // vertical
 		ctx.moveTo(i, -gridSize);
 		ctx.lineTo(i, gridSize);
 	}
-	ctx.lineWidth = 1;
-	ctx.strokeStyle = "white";
+	ctx.lineWidth = 5;
+	ctx.strokeStyle = "#e8b57a";
 	ctx.stroke();
 	ctx.restore();
 
